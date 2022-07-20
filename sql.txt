@@ -1,0 +1,21 @@
+// 1.SQL 
+SELECT
+	TIMESTAMPDIFF( HOUR, r.created_at, DATE_FORMAT(r.repair_date, "%Y-%m-%d") ) AS 'ortalama' 
+FROM
+	repairs AS r
+	LEFT JOIN repair_addresses AS ra ON repairs.repair_place = ra.id
+
+
+
+
+// 2.SQL
+SELECT 
+	WEEK(DATE_FORMAT(r.repair_date, "%Y-%m-%d %H:%i:%s")),
+	m.segment,
+	ROUND(AVG(r.car_id), 2) 
+FROM
+	repairs AS r
+	LEFT JOIN models AS m ON r.car_id = m.id 
+GROUP BY
+	WEEK(DATE_FORMAT(r.repair_date, "%Y-%m-%d %H:%i:%s")),
+	m.segment
